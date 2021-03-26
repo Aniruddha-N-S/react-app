@@ -52,10 +52,10 @@ export default class Contact extends React.Component {
   constructor(props) {
       super(props);
 
-      this.onChangeName = this.onChangeName.bind(this);
-      this.onChangeEmail = this.onChangeEmail.bind(this);
-      this.onChangePhone = this.onChangePhone.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+    //   this.onChangeName = this.onChangeName.bind(this);
+    //   this.onChangeEmail = this.onChangeEmail.bind(this);
+    //   this.onChangePhone = this.onChangePhone.bind(this);
+    //   this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           name: '',
@@ -65,21 +65,21 @@ export default class Contact extends React.Component {
   }
 
   // Form Events
-  onChangeName(e) {
+    onChangeName = (e) => {
       this.setState({ name: e.target.value })
   }
 
-  onChangeEmail(e) {
+    onChangeEmail = (e) => {
       this.setState({ email: e.target.value })
   }
 
-  onChangePhone(e) {
+    onChangePhone = (e) => {
       this.setState({ phone: e.target.value })
   }
 
-  onSubmit(e) {
+    onSubmit = (e) => {
       e.preventDefault()
-
+        this.userData = JSON.parse(localStorage.getItem('user'));
       this.setState({
           name: '',
           email: '',
@@ -141,7 +141,11 @@ export default class Contact extends React.Component {
                   </div>
                   <button type="submit" className="btn btn-primary btn-block">Submit</button>
               </form>
-              
+                  <div>
+                      {this.userData.map(data => (
+                          <p>{data}</p>
+                      ))}
+                  </div>
           </div>
           </GridWrapper>
       )
