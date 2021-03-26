@@ -58,6 +58,7 @@ export default class Contact extends React.Component {
     //   this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
+        details: [],
           name: '',
           email: '',
           phone: ''
@@ -79,8 +80,15 @@ export default class Contact extends React.Component {
 
     onSubmit = (e) => {
       e.preventDefault()
-        this.userData = JSON.parse(localStorage.getItem('user'));
+      let details = this.state.details;
+      details.push({
+        name: this.state.name,
+        email: this.state.email,
+        phone: this.state.phone,
+      });
+      console.log(details)
       this.setState({
+        details,
           name: '',
           email: '',
           phone: ''
@@ -120,7 +128,22 @@ export default class Contact extends React.Component {
       localStorage.setItem('user', JSON.stringify(nextState));
       // sessionStorage.setItem('user',JSON.stringify(nextState))
   }
-
+  // listDetails() {
+  //   let details = this.state.details;
+  //   return (
+  //     <ul>
+  //       {
+  //         details.map((val, index) => {
+  //           return (
+  //             <li key={index}>
+  //               { val}
+  //             </li>
+  //           );
+  //         })
+  //       }
+  //     </ul>
+  //   );
+  // }
 
   render() {
       return (
@@ -141,12 +164,23 @@ export default class Contact extends React.Component {
                   </div>
                   <button type="submit" className="btn btn-primary btn-block">Submit</button>
               </form>
-                  <div>
-                      {this.userData.map(data => (
-                          <p>{data}</p>
-                      ))}
-                  </div>
-          </div>
+
+            {/* <ul>
+              {
+                this.details.map(detail => {
+                  return (
+                    <li >{detail}
+                    </li>
+                  );
+                })
+              }
+            </ul> */}
+        </div>
+
+          {/* <div>
+                      
+                  </div> */}
+
           </GridWrapper>
       )
   }
