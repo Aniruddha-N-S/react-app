@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Tabs, Tab, Table } from 'react-bootstrap'
 
 const GridWrapper = styled.div`
   
@@ -94,6 +95,13 @@ export default class Contact extends React.Component {
           phone: ''
       })
   }
+  editData = (details) => {
+    this.setState({ name: details.name, email: details.email, phone: details.phone });
+    console.log(this.editData)
+  }
+  deleteData = (details) => {
+    this.setState({ details, name: '', email: '', phone: '' });
+  }
 
   
   componentDidMount() {
@@ -109,6 +117,7 @@ export default class Contact extends React.Component {
       //     phone:'',
       //   })
       // }
+
       if (localStorage.getItem('user')) {
           this.setState({
               name: this.userData.name,
@@ -123,6 +132,7 @@ export default class Contact extends React.Component {
           })
       }
   }
+  
 
   componentWillUpdate(nextProps, nextState) {
       localStorage.setItem('user', JSON.stringify(nextState));
@@ -146,6 +156,7 @@ export default class Contact extends React.Component {
   // }
 
   render() {
+    const { details } = this.state
       return (
         <GridWrapper>
           <div className="container">
@@ -163,23 +174,122 @@ export default class Contact extends React.Component {
                       <input type="tel" className="form-control" value={this.state.phone} onChange={this.onChangePhone} />
                   </div>
                   <button type="submit" className="btn btn-primary btn-block">Submit</button>
-              </form>
 
-            {/* <ul>
+
+              </form>
+            <div>
+              {/* <ol>
               {
-                this.details.map(detail => {
+                  details.map(detail => {
                   return (
-                    <li >{detail}
-                    </li>
+                    <>
+                      <li >{detail.name} {detail.email} {detail.phone}</li>
+                      <br></br>
+                    </>
                   );
                 })
               }
-            </ul> */}
+
+              </ol> */}
+            </div>
+            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+              <Tab eventKey="view" title="View">
+                <Table striped bordered hover variant="dark">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {
+                        details.map(detail => {
+                          return (
+                            <>
+                              <th>{detail.name}</th> <th>{detail.email}</th> <th>{detail.phone}</th>
+
+
+                            </>
+                          );
+                        })
+                      }
+                    </tr>
+                    <br></br>
+
+
+                  </tbody>
+                </Table>
+              </Tab>
+              {/* <Tab eventKey="create" title="Create">
+
+              </Tab> */}
+              <Tab eventKey="update" title="Update">
+                <Table striped bordered hover variant="dark">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {
+                        details.map(detail => {
+                          return (
+                            <>
+                              <th>{detail.name}</th> <th>{detail.email}</th> <th>{detail.phone}</th><th><button type="button" className="btn btn-success" onClick={this.editData}>Edit</button> </th>
+
+
+                            </>
+                          );
+                        })
+                      }
+                    </tr>
+                    <br></br>
+
+
+                  </tbody>
+                </Table>
+              </Tab>
+              <Tab eventKey="delete" title="Delete">
+                <Table striped bordered hover variant="dark">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {
+                        details.map(detail => {
+                  return (
+                    <>
+                      <td>{detail.name}</td> <td>{detail.email}</td> <td>{detail.phone}</td><td><button type="button" className="btn btn-success" onClick={this.deleteData}>Delete</button></td>
+
+
+                    </>
+                  );
+                })
+              }
+                    </tr>
+                    <br></br>
+
+
+                  </tbody>
+                </Table>
+              </Tab>
+            </Tabs>
         </div>
 
-          {/* <div>
-                      
-                  </div> */}
+
 
           </GridWrapper>
       )
